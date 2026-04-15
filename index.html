@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>呵睏床墊 — 睏一下，醒來就是新的自己</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --yellow: #FFD93D;
+  --orange: #FF6B35;
+  --red: #FF3366;
+  --dark: #1a1a1a;
+  --gray: #f5f5f5;
+  --white: #ffffff;
+}
+body { font-family: 'Microsoft JhengHei', sans-serif; color: var(--dark); }
+
+/* 導覽列 */
+nav { position: fixed; top: 0; width: 100%; background: var(--dark); z-index: 100; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-size: 24px; font-weight: 900; color: var(--yellow); letter-spacing: 2px; }
+.logo span { color: var(--orange); }
+.nav-links a { color: #fff; text-decoration: none; margin-left: 28px; font-size: 15px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--yellow); }
+.nav-cta { background: var(--orange); color: #fff !important; padding: 8px 20px; border-radius: 25px; font-weight: 700; }
+.nav-cta:hover { background: var(--red) !important; color: #fff !important; }
+
+/* 頁面切換 */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ===== 首頁 ===== */
+.hero { min-height: 100vh; background: var(--dark); display: flex; align-items: center; justify-content: center; text-align: center; padding: 100px 20px 60px; position: relative; overflow: hidden; }
+.hero::before { content: '😴'; font-size: 300px; position: absolute; opacity: 0.05; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+.hero-badge { background: var(--yellow); color: var(--dark); font-size: 13px; font-weight: 700; padding: 6px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+.hero h1 { font-size: 58px; font-weight: 900; color: #fff; line-height: 1.2; margin-bottom: 16px; }
+.hero h1 span { color: var(--yellow); }
+.hero p { font-size: 18px; color: #aaa; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn-primary { background: var(--orange); color: #fff; padding: 16px 36px; border-radius: 30px; font-size: 16px; font-weight: 700; text-decoration: none; border: none; cursor: pointer; transition: all 0.2s; }
+.btn-primary:hover { background: var(--red); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,53,0.4); }
+.btn-secondary { background: transparent; color: #fff; padding: 16px 36px; border-radius: 30px; font-size: 16px; font-weight: 700; text-decoration: none; border: 2px solid #fff; cursor: pointer; transition: all 0.2s; }
+.btn-secondary:hover { border-color: var(--yellow); color: var(--yellow); }
+
+/* 特色區 */
+.features { padding: 80px 40px; background: var(--gray); }
+.section-title { text-align: center; font-size: 36px; font-weight: 900; margin-bottom: 12px; }
+.section-sub { text-align: center; color: #888; margin-bottom: 48px; font-size: 16px; }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+.feature-card { background: #fff; padding: 36px 24px; border-radius: 16px; text-align: center; box-shadow: 0 4px 16px rgba(0,0,0,0.06); transition: transform 0.2s; }
+.feature-card:hover { transform: translateY(-4px); }
+.feature-icon { font-size: 48px; margin-bottom: 16px; }
+.feature-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+.feature-card p { color: #888; font-size: 14px; line-height: 1.6; }
+
+/* 熱賣產品預覽 */
+.products-preview { padding: 80px 40px; background: var(--dark); }
+.products-preview .section-title { color: #fff; }
+.products-preview .section-sub { color: #888; }
+.product-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto 40px; }
+.product-card { background: #2a2a2a; border-radius: 16px; overflow: hidden; transition: transform 0.2s; cursor: pointer; }
+.product-card:hover { transform: translateY(-4px); }
+.product-img { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 80px; }
+.product-info { padding: 20px; }
+.product-tag { background: var(--yellow); color: var(--dark); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 12px; display: inline-block; margin-bottom: 8px; }
+.product-card h3 { color: #fff; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+.product-card p { color: #888; font-size: 13px; margin-bottom: 12px; }
+.product-price { color: var(--orange); font-size: 22px; font-weight: 900; }
+.products-preview .btn-primary { display: block; text-align: center; max-width: 200px; margin: 0 auto; }
+
+/* 客戶見證 */
+.testimonials { padding: 80px 40px; background: var(--white); }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; }
+.testimonial-card { background: var(--gray); padding: 28px; border-radius: 16px; }
+.stars { color: var(--orange); font-size: 18px; margin-bottom: 12px; }
+.testimonial-card p { color: #444; font-size: 14px; line-height: 1.8; margin-bottom: 16px; }
+.reviewer { display: flex; align-items: center; gap: 12px; }
+.reviewer-avatar { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; background: var(--yellow); }
+.reviewer-name { font-weight: 700; font-size: 14px; }
+.reviewer-info { color: #888; font-size: 12px; }
+
+/* CTA 區 */
+.cta-section { padding: 80px 40px; background: linear-gradient(135deg, var(--orange), var(--red)); text-align: center; }
+.cta-section h2 { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 16px; }
+.cta-section p { color: rgba(255,255,255,0.85); font-size: 18px; margin-bottom: 36px; }
+.btn-white { background: #fff; color: var(--orange); padding: 16px 40px; border-radius: 30px; font-size: 16px; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.2s; border: none; cursor: pointer; }
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+/* ===== 產品頁 ===== */
+.products-hero { padding: 120px 40px 60px; background: var(--dark); text-align: center; }
+.products-hero h1 { font-size: 48px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+.products-hero h1 span { color: var(--yellow); }
+.products-hero p { color: #aaa; font-size: 16px; }
+.products-list { padding: 60px 40px; background: var(--gray); }
+.products-full-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px; max-width: 1100px; margin: 0 auto; }
+.product-full-card { background: #fff; border-radius: 20px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.2s; }
+.product-full-card:hover { transform: translateY(-6px); }
+.product-full-img { height: 200px; display: flex; align-items: center; justify-content: center; font-size: 90px; }
+.img-yellow { background: linear-gradient(135deg, #FFD93D22, #FFD93D44); }
+.img-orange { background: linear-gradient(135deg, #FF6B3522, #FF6B3544); }
+.img-red { background: linear-gradient(135deg, #FF336622, #FF336644); }
+.img-purple { background: linear-gradient(135deg, #8B5CF622, #8B5CF644); }
+.product-full-info { padding: 24px; }
+.product-full-info h3 { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+.product-full-info .desc { color: #666; font-size: 14px; line-height: 1.7; margin-bottom: 16px; }
+.specs { background: var(--gray); border-radius: 10px; padding: 14px; margin-bottom: 16px; }
+.spec-item { display: flex; justify-content: space-between; font-size: 13px; padding: 4px 0; border-bottom: 1px solid #eee; }
+.spec-item:last-child { border-bottom: none; }
+.spec-label { color: #888; }
+.spec-value { font-weight: 700; color: var(--dark); }
+.price-row { display: flex; align-items: center; justify-content: space-between; }
+.full-price { font-size: 28px; font-weight: 900; color: var(--orange); }
+.orig-price { font-size: 14px; color: #aaa; text-decoration: line-through; }
+
+/* ===== 聯絡頁 ===== */
+.contact-hero { padding: 120px 40px 60px; background: var(--dark); text-align: center; }
+.contact-hero h1 { font-size: 48px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+.contact-hero h1 span { color: var(--orange); }
+.contact-hero p { color: #aaa; }
+.contact-content { padding: 60px 40px; background: var(--gray); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; max-width: 1000px; margin: 0 auto; }
+.contact-info h2 { font-size: 28px; font-weight: 900; margin-bottom: 24px; }
+.contact-item { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+.contact-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.icon-yellow { background: var(--yellow); }
+.icon-orange { background: var(--orange); }
+.icon-red { background: var(--red); }
+.contact-item h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.contact-item p { color: #666; font-size: 14px; }
+.contact-form h2 { font-size: 28px; font-weight: 900; margin-bottom: 24px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px 16px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 14px; font-family: inherit; transition: border-color 0.2s; outline: none; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--orange); }
+.form-group textarea { height: 120px; resize: vertical; }
+.submit-btn { width: 100%; background: var(--orange); color: #fff; padding: 14px; border: none; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
+.submit-btn:hover { background: var(--red); }
+
+/* 頁尾 */
+footer { background: var(--dark); color: #888; text-align: center; padding: 32px 20px; font-size: 13px; }
+footer span { color: var(--yellow); font-weight: 700; }
+
+/* RWD */
+@media (max-width: 768px) {
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  .hero h1 { font-size: 36px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section-title { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">呵<span>睏</span>床墊</div>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')">首頁</a>
+    <a href="#" onclick="showPage('products')">產品</a>
+    <a href="#" onclick="showPage('contact')" class="nav-cta">立即詢問</a>
+  </div>
+</nav>
+
+<!-- 首頁 -->
+<div id="home" class="page active">
+  <section class="hero">
+    <div>
+      <div class="hero-badge">🛏️ 台灣在地床墊品牌</div>
+      <h1>睏一下<br><span>醒來就是新的自己</span></h1>
+      <p>呵睏，台語「睡覺」的意思。我們相信好眠是年輕人最值得的投資。</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="showPage('products')">看看床墊 →</button>
+        <button class="btn-secondary" onclick="showPage('contact')">免費諮詢</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2 class="section-title">為什麼選呵睏？</h2>
+    <p class="section-sub">年輕人的第一張好床，CP值爆表</p>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>超高CP值</h3>
+        <p>工廠直營，省去中間商，讓你用最划算的價格睡最好的床</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔬</div>
+        <h3>科學支撐設計</h3>
+        <p>符合人體工學，獨立筒彈簧，不論什麼睡姿都舒適</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>100晚試睡</h3>
+        <p>睡不好全額退款，讓你放心嘗試，睡滿意再說</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🚚</div>
+        <h3>免費到府配送</h3>
+        <p>全台免運，到府安裝，舊床免費回收，一條龍服務</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-preview">
+    <h2 class="section-title">熱賣床墊</h2>
+    <p class="section-sub">最多年輕人選擇的款式</p>
+    <div class="product-cards">
+      <div class="product-card" onclick="showPage('products')">
+        <div class="product-img" style="background:linear-gradient(135deg,#FFD93D22,#FFD93D44)">🛏️</div>
+        <div class="product-info">
+          <span class="product-tag">熱銷第一</span>
+          <h3>呵睏 Classic</h3>
+          <p>獨立筒彈簧，透氣舒眠，入門首選</p>
+          <div class="product-price">NT$ 8,990 起</div>
+        </div>
+      </div>
+      <div class="product-card" onclick="showPage('products')">
+        <div class="product-img" style="background:linear-gradient(135deg,#FF6B3522,#FF6B3544)">😴</div>
+        <div class="product-info">
+          <span class="product-tag" style="background:var(--orange);color:#fff">新品上市</span>
+          <h3>呵睏 Pro</h3>
+          <p>記憶棉+獨立筒，零壓力感受深度睡眠</p>
+          <div class="product-price">NT$ 14,990 起</div>
+        </div>
+      </div>
+      <div class="product-card" onclick="showPage('products')">
+        <div class="product-img" style="background:linear-gradient(135deg,#FF336622,#FF336644)">⭐</div>
+        <div class="product-info">
+          <span class="product-tag" style="background:var(--red);color:#fff">旗艦款</span>
+          <h3>呵睏 Ultra</h3>
+          <p>頂級乳膠+記憶棉，睡過就回不去了</p>
+          <div class="product-price">NT$ 24,990 起</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn-primary" onclick="showPage('products')">查看全部產品</button>
+  </section>
+
+  <section class="testimonials">
+    <h2 class="section-title">客人怎麼說</h2>
+    <p class="section-sub">真實使用心得</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>「買了呵睏 Pro，睡眠品質整個改變！以前都要靠鬧鐘叫，現在自然醒，整個人精神超好！」</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👩</div>
+          <div>
+            <div class="reviewer-name">小瑜 ⭐</div>
+            <div class="reviewer-info">台北 / 上班族 / 使用3個月</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>「CP值真的超高！同等級的床墊在其他地方要貴一倍，而且100晚試睡讓我買得很安心。」</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👨</div>
+          <div>
+            <div class="reviewer-name">阿哲 ⭐</div>
+            <div class="reviewer-info">台中 / 學生 / 使用2個月</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>「搬新家第一個買的就是呵睏床墊，配送超快，安裝師傅很專業，睡起來真的差很多！」</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👩</div>
+          <div>
+            <div class="reviewer-name">Emma ⭐</div>
+            <div class="reviewer-info">高雄 / 新婚夫妻 / 使用1個月</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <h2>今晚開始，睡好一點 🌙</h2>
+    <p>100晚試睡，睡不好全額退款，零風險入手</p>
+    <button class="btn-white" onclick="showPage('contact')">立即免費諮詢</button>
+  </section>
+</div>
+
+<!-- 產品頁 -->
+<div id="products" class="page">
+  <section class="products-hero">
+    <h1>全部<span>床墊</span>系列</h1>
+    <p>找到最適合你的那一張，100晚試睡無壓力</p>
+  </section>
+  <section class="products-list">
+    <div class="products-full-grid">
+      <div class="product-full-card">
+        <div class="product-full-img img-yellow">🛏️</div>
+        <div class="product-full-info">
+          <span class="product-tag">熱銷第一</span>
+          <h3>呵睏 Classic</h3>
+          <p class="desc">入門首選，獨立筒彈簧設計，透氣排濕，適合各種睡姿，讓你每天都睡得香甜。</p>
+          <div class="specs">
+            <div class="spec-item"><span class="spec-label">材質</span><span class="spec-value">獨立筒彈簧</span></div>
+            <div class="spec-item"><span class="spec-label">厚度</span><span class="spec-value">22cm</span></div>
+            <div class="spec-item"><span class="spec-label">試睡</span><span class="spec-value">100晚</span></div>
+            <div class="spec-item"><span class="spec-label">保固</span><span class="spec-value">5年</span></div>
+          </div>
+          <div class="price-row">
+            <div><div class="full-price">NT$ 8,990</div><div class="orig-price">原價 NT$ 12,000</div></div>
+            <button class="btn-primary" onclick="showPage('contact')">立即詢問</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-full-card">
+        <div class="product-full-img img-orange">😴</div>
+        <div class="product-full-info">
+          <span class="product-tag" style="background:var(--orange);color:#fff">新品上市</span>
+          <h3>呵睏 Pro</h3>
+          <p class="desc">記憶棉+獨立筒雙層設計，零壓力貼合身型，讓你進入深度睡眠，早上醒來神清氣爽。</p>
+          <div class="specs">
+            <div class="spec-item"><span class="spec-label">材質</span><span class="spec-value">記憶棉+獨立筒</span></div>
+            <div class="spec-item"><span class="spec-label">厚度</span><span class="spec-value">26cm</span></div>
+            <div class="spec-item"><span class="spec-label">試睡</span><span class="spec-value">100晚</span></div>
+            <div class="spec-item"><span class="spec-label">保固</span><span class="spec-value">8年</span></div>
+          </div>
+          <div class="price-row">
+            <div><div class="full-price">NT$ 14,990</div><div class="orig-price">原價 NT$ 20,000</div></div>
+            <button class="btn-primary" onclick="showPage('contact')">立即詢問</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-full-card">
+        <div class="product-full-img img-red">⭐</div>
+        <div class="product-full-info">
+          <span class="product-tag" style="background:var(--red);color:#fff">旗艦款</span>
+          <h3>呵睏 Ultra</h3>
+          <p class="desc">頂級天然乳膠+記憶棉+獨立筒三層設計，一旦睡過就回不去了，給自己最好的睡眠投資。</p>
+          <div class="specs">
+            <div class="spec-item"><span class="spec-label">材質</span><span class="spec-value">乳膠+記憶棉+獨立筒</span></div>
+            <div class="spec-item"><span class="spec-label">厚度</span><span class="spec-value">30cm</span></div>
+            <div class="spec-item"><span class="spec-label">試睡</span><span class="spec-value">100晚</span></div>
+            <div class="spec-item"><span class="spec-label">保固</span><span class="spec-value">10年</span></div>
+          </div>
+          <div class="price-row">
+            <div><div class="full-price">NT$ 24,990</div><div class="orig-price">原價 NT$ 35,000</div></div>
+            <button class="btn-primary" onclick="showPage('contact')">立即詢問</button>
+          </div>
+        </div>
+      </div>
+      <div class="product-full-card">
+        <div class="product-full-img img-purple">🌙</div>
+        <div class="product-full-info">
+          <span class="product-tag" style="background:#8B5CF6;color:#fff">限量款</span>
+          <h3>呵睏 Mini</h3>
+          <p class="desc">專為小空間設計的單人床墊，租屋族、宿舍生的最佳選擇，輕巧好移動，睡眠不將就。</p>
+          <div class="specs">
+            <div class="spec-item"><span class="spec-label">材質</span><span class="spec-value">高密度泡棉+彈簧</span></div>
+            <div class="spec-item"><span class="spec-label">厚度</span><span class="spec-value">18cm</span></div>
+            <div class="spec-item"><span class="spec-label">試睡</span><span class="spec-value">100晚</span></div>
+            <div class="spec-item"><span class="spec-label">保固</span><span class="spec-value">3年</span></div>
+          </div>
+          <div class="price-row">
+            <div><div class="full-price">NT$ 5,990</div><div class="orig-price">原價 NT$ 8,000</div></div>
+            <button class="btn-primary" onclick="showPage('contact')">立即詢問</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- 聯絡頁 -->
+<div id="contact" class="page">
+  <section class="contact-hero">
+    <h1>聯絡<span>我們</span></h1>
+    <p>有任何問題都可以問我們，我們會在24小時內回覆</p>
+  </section>
+  <section class="contact-content">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>我們在這裡 👋</h2>
+        <div class="contact-item">
+          <div class="contact-icon icon-yellow">📱</div>
+          <div>
+            <h4>LINE 官方帳號</h4>
+            <p>@hekun.mattress<br>最快回覆方式</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon icon-orange">📧</div>
+          <div>
+            <h4>電子郵件</h4>
+            <p>hello@hekun.tw<br>24小時內回覆</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon icon-red">📍</div>
+          <div>
+            <h4>展示中心</h4>
+            <p>台中市西屯區<br>（預約參觀）</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <h2>留下您的資料 📝</h2>
+        <div class="form-group">
+          <label>您的姓名</label>
+          <input type="text" placeholder="請輸入姓名">
+        </div>
+        <div class="form-group">
+          <label>聯絡電話</label>
+          <input type="tel" placeholder="0912-345-678">
+        </div>
+        <div class="form-group">
+          <label>有興趣的產品</label>
+          <select>
+            <option>呵睏 Classic（NT$8,990起）</option>
+            <option>呵睏 Pro（NT$14,990起）</option>
+            <option>呵睏 Ultra（NT$24,990起）</option>
+            <option>呵睏 Mini（NT$5,990起）</option>
+            <option>還不確定，想先了解</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>想問什麼？</label>
+          <textarea placeholder="尺寸、價格、試睡方式...都可以問！"></textarea>
+        </div>
+        <button class="submit-btn" onclick="alert('感謝您的詢問！我們將在24小時內與您聯繫 😊')">送出詢問 →</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>© 2026 <span>呵睏床墊</span> — 睏一下，醒來就是新的自己 🛏️</p>
+</footer>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
